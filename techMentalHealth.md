@@ -4,12 +4,12 @@ Vivian Tran and Nicolle Yaranga
 12/4/2017
 
 1. Abstract
-===========
+-----------
 
 This data mining project looks at the several statistical models and their ability to predict whether or not an individual will seek treatment for a mental health condition. We use the data from a Open Sourcing Mental Illness's 2014 survey, which includes employee-reported information about their companies, specifically data regarding the companys' and employees' attitudes towards mental health. Using the classification tree, bootstrap aggregating ("bagging"), and logistic regression models, we note differences in accuracy (and thus, effectiveness), the models has toward the entire data set. We conclude that the logistic regression model and the bootstrap aggregate model were both effective in classifying Although we used models to predict our outcome, we noticed similar reapearing patterns that we knew would serve of importance when predicting indivduals attitude toward mental health treatment.
 
 2. Introduction
-===============
+---------------
 
 Our goal is to build a model that can predict whether or not an employee seeks treatment for a mental health condition. Specifically, we would like to focus on the factors that influence whether or not an individual would seek professional help. There have been many studies (implementing data mining) done on the effects of mental health, for example, Joachim Diederich's *Ex-ray: Data mining and mental health*: "\[m\]achine learning techniques such as support vector machines are applied to a text classification task to determine mental health problems" (Diederich, 2006). However, little to no studies have focused specifically on the effects of mental health in a "tech" workplace.
 
@@ -20,22 +20,19 @@ The data is found on Open Sourcing Mental Illness's website, a non profit dedica
 Our analysis is performed using the R statistical programming language. We first split the data set into training and test sets. We then focused on classification techniques, which include comparing the error after fitting the models on the test set. The models we chose to perform are a decision tree, bootstrap aggregated trees, and logistic regression. Through the ROC curve, which shows the relationship between false-positive rate and true-positive rate of a model, and the area under those curves, we concluded that the logistic regression model was was the best model for classifying whether or not a person chose to seek treatment for a mental health issue. This model, however, was followed closely by the bootstrap aggregate decision tree model. Overall, we were successful in our attempt to find a model that would classify those who chose to seek treatment against those who did not choose to seek treatment.
 
 3. Data and Methods
-===================
+-------------------
 
-Data Cleaning
--------------
+### Data Cleaning
 
 Tidy data is essential for reproducibility and interpretability for future research. Thus, the first step in our analysis is to clean our data set. Since the survey included some open-response questions, many of the outcomes were different but belonged to the same group-- for example, gender. We created three groups for gender- male, female and other.
 
 To simplify the data even further, we group countries by regions to create a more concise classification and to create a more even distribution of regional groups. The regions were "US" "NorthAmerica\_other" (North American countries that are not the US), "Asia", "Europe", "Africa", "Oceana" (Australia and New Zealand), and "South\_Central\_America" (Countries located in South and Central America). We renamed the "Country" column to "geographicRegion". Our predictor variable is "treatment" which corresponds to the question "Have you sought treatment for a mental health condition?" (OSMI, 2014). We remove variables that were not as relevant or important indicators of seeking mental health treatment. These variables include Timestamp (all of the observations were recorded in the data set around the same time), comments (they are much too open-ended to be used to classify individuals), and state (this is redundant because we already have the US listed as a geographic region).
 
-Methods
--------
+### Methods
 
 Since treatment is a categorical variable with levels being "Yes" and "No", we use classification techniques to build our models: tree() (classification tree), randomForest() (bootstrap aggregated trees), and glm() (logistic regression).
 
-Test and Training Set
----------------------
+### Test and Training Set
 
 We randomly sample 100 observations from the data set to create our training set. The remaining observations make up our test set. We made sure to use the set.seed() function in order to make the sampling reproducible. If we did not use set.seed(), the 100 samples would not be consistent every time we run the code. Throughout our analysis, we fit our models to the training set and then fit the models to the test set to see how well the models are able to classify individuals.
 
@@ -71,7 +68,7 @@ The first model we fit to our training data is a decision tree using the tree() 
 
 ![](techMentalHealth_files/figure-markdown_github/unnamed-chunk-4-1.png)
 
-### Prune the decision tree
+#### Prune the decision tree
 
 We decided to do a 10-fold cross-validation with the funtion cv.tree(). To find the smallest yet best size for the tree, we must look at the smallest misclassification error of each fold. In the end, the best size was 4 nodes. Notice that the only three variables that were taken into consideration in the classification were work\_interfere, family\_history and care\_options which were the variables that the function decided to split on at the top nodes of the 92-node tree.
 
@@ -140,8 +137,7 @@ varImpPlot(survey_bag, sort=T)
 
 ![](techMentalHealth_files/figure-markdown_github/unnamed-chunk-8-1.png)
 
-Logistic Regression
--------------------
+### Logistic Regression
 
 The last model we are using to classify is the logistic regression model. We generate this model using the glm() function.
 
