@@ -1,15 +1,18 @@
-Mental Health in Tech
-================
-Vivian Tran and Nicolle Yaranga
-12/4/2017
+# Mental Health in Tech
 
-1. Abstract
------------
+*Vivian Tran and Nicolle Yaranga*
+
+*University of California, Santa Barbara*
+
+*Fall 2017*
+
+## 1. Abstract
+
 
 This data mining project looks at the several statistical models and their ability to predict whether or not an individual will seek treatment for a mental health condition. We use the data from a Open Sourcing Mental Illness's 2014 survey, which includes employee-reported information about their companies, specifically data regarding the companys' and employees' attitudes towards mental health. Using the classification tree, bootstrap aggregating ("bagging"), and logistic regression models, we note differences in accuracy (and thus, effectiveness), the models has toward the entire data set. We conclude that the logistic regression model and the bootstrap aggregate model were both effective in classifying Although we used models to predict our outcome, we noticed similar reapearing patterns that we knew would serve of importance when predicting indivduals attitude toward mental health treatment.
 
-2. Introduction
----------------
+## 2. Introduction
+
 
 Our goal is to build a model that can predict whether or not an employee seeks treatment for a mental health condition. Specifically, we would like to focus on the factors that influence whether or not an individual would seek professional help. There have been many studies (implementing data mining) done on the effects of mental health, for example, Joachim Diederich's *Ex-ray: Data mining and mental health*: "\[m\]achine learning techniques such as support vector machines are applied to a text classification task to determine mental health problems" (Diederich, 2006). However, little to no studies have focused specifically on the effects of mental health in a "tech" workplace.
 
@@ -19,8 +22,8 @@ The data is found on Open Sourcing Mental Illness's website, a non profit dedica
 
 Our analysis is performed using the R statistical programming language. We first split the data set into training and test sets. We then focused on classification techniques, which include comparing the error after fitting the models on the test set. The models we chose to perform are a decision tree, bootstrap aggregated trees, and logistic regression. Through the ROC curve, which shows the relationship between false-positive rate and true-positive rate of a model, and the area under those curves, we concluded that the logistic regression model was was the best model for classifying whether or not a person chose to seek treatment for a mental health issue. This model, however, was followed closely by the bootstrap aggregate decision tree model. Overall, we were successful in our attempt to find a model that would classify those who chose to seek treatment against those who did not choose to seek treatment.
 
-3. Data and Methods
--------------------
+## 3. Data and Methods
+
 
 ### Data Cleaning
 
@@ -43,8 +46,8 @@ survey_train <- survey2[-surv.indices,]
 survey_test <- survey2[surv.indices,]
 ```
 
-Decision Tree
--------------
+### Decision Tree
+
 
 The first model we fit to our training data is a decision tree using the tree() function, where we specify method="class" to obtain a classification tree. We decided to use this model because our variables had mostly binary, categorical responses. First, we created our tree parameters with minsize=10 and mindev= 1e-3. Then we fit a tree model to predict treatment in our training set. Using the summary() function, we are able to see that the model has 92 terminal nodes and a misclassification error rate of 0.1098. A small 399.4/810 observations are missclassified. However, we want a simpler model because 89 nodes is fairly large, and large decision trees tend to overfit and result in high variance. Additionally, such a large tree is impractical for visualization.
 
@@ -100,8 +103,8 @@ Out of 100 total individuals, our model classified 63 correctly, giving us a 69%
 
 Overall, our tree model seems to do an adequate job at determining whether or not an individual will seek treatment, but it could be better. As for the results of this model, because our test error rate was fairly low we can say with a fair amount of confidence that individuals will seek mental health treatment depending on whether they feel that their mental health condition interferes with work. However, the more interesting result is the use of variable "care\_options", which states if a person knows the options for mental health care provided by his/her employer. We predict that IF an employee knows about the resources provided to them, then they are more likely to seek treatment for mental health. This is important, because companies can use this information as an motive to provide their employees with more opportunities to work on mental health, such as company paid therapy, workshops, vacation time, etc. Tech and non tech companies need to put their employees first and not forget the importance of their mental well-being.
 
-Bootstrap Aggregate
--------------------
+### Bootstrap Aggregate
+
 
 Since our classification rate for the tree model could have been better, we fit the training data using bootstrap aggregated tree models (also known as "bagging") using the randomForest() function. The function would not run initially because our data set contains NA values, so we specified the function to omit the NA values. There are 500 trees and the number of variables treid at each split is four.
 
@@ -156,8 +159,7 @@ Fitting our model to the test set, we observed the following: Out of the 75 tota
 
 Overall, our model performs better than the pruned tree model, but it does not perform as well as the bagged decision tree model. Again, those who did not seek treatment had a lower classification rate than those who did seek treatment.
 
-4. Results
-----------
+## 4. Results
 
 ### Comparing the models
 
@@ -196,8 +198,7 @@ auc_glm
 
 All other results, plots, and analyses are woven into the rest of the body of the report.
 
-5. Discussion
--------------
+## 5. Discussion
 
 We did achieve our goal of finding a model that will classify whether or not an individual will seek treatment for their mental health condition. With relatively low classification errors high areas under the curves, either a logistic regression model or a bootstrap aggregated model would be sufficient to classify the individuals. However, there were certainly some challenges that we encountered along the way.
 
@@ -205,8 +206,8 @@ One of the challenges that we encountered was choosing the model that would work
 
 In the future, we would attempt to improve on the bootstrap aggregate decision tree model using a random forest model. Since the bootstrap model was able to improve our pruned tree model drastically, we would be interested to see how much the random forest would improve the boostrap aggregate model and how the random forest model compares to the logistic regression model. We were surprised to see that the logistic regression model was on par in terms of performance with the bootstrap aggregate model. Thus, We would also want to improve upon the logistic regression model.
 
-6. Miscellaneous
-----------------
+## 6. Miscellaneous
+
 
 We obtained our data from Open Sourcing Mental Illness's website: <https://osmihelp.org/research/>. However, we were directed to this site from Kaggle: <https://www.kaggle.com/osmi/mental-health-in-tech-survey>
 
